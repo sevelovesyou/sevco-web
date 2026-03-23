@@ -5,11 +5,49 @@
   --sevco-red: #BD0000;
   --sevco-yellow: #FCC318;
   --sevco-green: #00A611;
+  
+  /* Theme variables */
+  --bg-primary: #0a0a0a;
+  --text-primary: #ffffff;
+  --accent-color: #0037FF;
+}
+
+html.light {
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+  --accent-color: #0037FF;
+}
+
+html.blue {
+  --bg-primary: #001a80;
+  --text-primary: #ffffff;
+  --accent-color: #0037FF;
+}
+
+html.red {
+  --bg-primary: #330000;
+  --text-primary: #ffffff;
+  --accent-color: #BD0000;
+}
+
+html.yellow {
+  --bg-primary: #2d2700;
+  --text-primary: #ffffff;
+  --accent-color: #FCC318;
+}
+
+html.green {
+  --bg-primary: #001a00;
+  --text-primary: #ffffff;
+  --accent-color: #00A611;
 }
 
 body {
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html {
