@@ -18,10 +18,13 @@ export const metadata: Metadata = {
   title: "SEVCO — Inspire",
   description: "SEVCO is a digital agency and music services firm dedicated to driving progress through great products. Web design, digital architecture, creative consulting, and artist services.",
   keywords: ["SEVCO", "digital agency", "music services", "web design", "Seve", "artist services"],
+  icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: "SEVCO — Inspire",
     description: "Digital agency & music services firm. We build great products and help artists thrive.",
-    url: "https://sevelovesyou.com",
+    url: "https://sevco.us",
     siteName: "SEVCO",
     type: "website",
   },
