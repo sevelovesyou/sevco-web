@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/lib/theme-context";
+import type { Theme } from "@/lib/theme";
 
 const links = [
   { label: "Work", href: "/work" },
@@ -12,7 +13,7 @@ const links = [
   { label: "About", href: "/about" },
 ];
 
-const themes = [
+const themes: Array<{ id: Theme; label: string; color: string }> = [
   { id: "light", label: "Light", color: "#ffffff" },
   { id: "dark", label: "Dark", color: "#0a0a0a" },
   { id: "blue", label: "Blue", color: "#0037FF" },
