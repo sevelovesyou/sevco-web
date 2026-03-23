@@ -11,10 +11,10 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       <AdminNav />
-      <div className="ml-64">
-        <main className="p-8">{children}</main>
+      <div className="md:ml-64">
+        <main className="p-4 md:p-8">{children}</main>
       </div>
     </div>
   )

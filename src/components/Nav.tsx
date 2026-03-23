@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const links = [
   { label: "Work", href: "/work" },
@@ -14,8 +15,10 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -54,8 +57,9 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* CTA */}
+        {/* CTA & Theme */}
         <div className="hidden md:flex items-center gap-4">
+          {mounted && <ThemeSwitcher />}
           <Link
             href="/contact"
             className="text-sm bg-white text-black px-5 py-2 rounded-full font-semibold hover:bg-white/90 transition-colors"
@@ -65,17 +69,20 @@ export default function Nav() {
         </div>
 
         {/* Mobile hamburger */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          <div className="space-y-1.5">
-            <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "opacity-0" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
-          </div>
-        </button>
+        <div className="flex items-center gap-2">
+          {mounted && <ThemeSwitcher />}
+          <button
+            className="md:hidden text-white"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            <div className="space-y-1.5">
+              <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "opacity-0" : ""}`} />
+              <span className={`block w-6 h-0.5 bg-white transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+            </div>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
