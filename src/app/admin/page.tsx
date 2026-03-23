@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
-import { TrendingUp, Users, DollarSign, Music } from 'lucide-react'
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { TrendingUp, Users, Zap, Music, ArrowUpRight } from 'lucide-react'
 import { SEVCO_COLORS } from '@/lib/utils'
 
 export default function DashboardPage() {
@@ -13,206 +12,183 @@ export default function DashboardPage() {
     setMounted(true)
   }, [])
 
-  // Mock KPI data
   const kpis = [
     {
       title: 'Revenue',
       value: '$24,500',
       change: '+12.5%',
-      icon: DollarSign,
-      color: SEVCO_COLORS.blue,
+      positive: true,
+      icon: Zap,
     },
     {
       title: 'Active Users',
       value: '2,847',
       change: '+8.2%',
+      positive: true,
       icon: Users,
-      color: SEVCO_COLORS.green,
     },
     {
       title: 'Projects',
       value: '42',
       change: '+4.1%',
-      icon: Users,
-      color: SEVCO_COLORS.red,
+      positive: true,
+      icon: TrendingUp,
     },
     {
       title: 'Streams',
       value: '128.5K',
       change: '+24.3%',
+      positive: true,
       icon: Music,
-      color: SEVCO_COLORS.yellow,
     },
   ]
 
-  // Mock chart data
   const revenueData = [
-    { month: 'Jan', revenue: 4000 },
-    { month: 'Feb', revenue: 3000 },
-    { month: 'Mar', revenue: 2000 },
-    { month: 'Apr', revenue: 2780 },
-    { month: 'May', revenue: 1890 },
-    { month: 'Jun', revenue: 2390 },
-    { month: 'Jul', revenue: 3490 },
+    { month: 'Jan', value: 4000 },
+    { month: 'Feb', value: 3000 },
+    { month: 'Mar', value: 2000 },
+    { month: 'Apr', value: 2780 },
+    { month: 'May', value: 1890 },
+    { month: 'Jun', value: 2390 },
+    { month: 'Jul', value: 3490 },
   ]
 
   const userGrowth = [
-    { month: 'Jan', users: 400 },
-    { month: 'Feb', users: 520 },
-    { month: 'Mar', users: 580 },
-    { month: 'Apr', users: 720 },
-    { month: 'May', users: 850 },
-    { month: 'Jun', users: 980 },
-    { month: 'Jul', users: 1200 },
-  ]
-
-  const projectStatus = [
-    { name: 'Active', value: 28, fill: SEVCO_COLORS.green },
-    { name: 'Paused', value: 10, fill: SEVCO_COLORS.yellow },
-    { name: 'Archived', value: 4, fill: SEVCO_COLORS.red },
+    { month: 'Jan', value: 400 },
+    { month: 'Feb', value: 520 },
+    { month: 'Mar', value: 580 },
+    { month: 'Apr', value: 720 },
+    { month: 'May', value: 850 },
+    { month: 'Jun', value: 980 },
+    { month: 'Jul', value: 1200 },
   ]
 
   if (!mounted) return null
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500">Welcome back, Peter. Here's your SEVCO overview.</p>
+    <div className="space-y-12 animate-fade-in">
+      {/* Hero Header */}
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold text-strong mb-2">Dashboard</h1>
+        <p className="text-muted text-lg">Welcome back. Here's what's happening with SEVCO this month.</p>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpis.map((kpi) => {
+      {/* KPI Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {kpis.map((kpi, idx) => {
           const Icon = kpi.icon
           return (
-            <Card key={kpi.title}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
-                  <div
-                    className="p-2 rounded-lg"
-                    style={{ backgroundColor: kpi.color + '20' }}
-                  >
-                    <Icon
-                      size={18}
-                      style={{ color: kpi.color }}
-                    />
+            <div
+              key={kpi.title}
+              className="surface-card p-6 rounded-xl hover:shadow-lg transition-all duration-300 group"
+              style={{ animationDelay: `${idx * 100}ms` }}
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <p className="text-sm text-muted mb-2 font-medium">{kpi.title}</p>
+                  <h3 className="text-3xl font-bold text-strong mb-3">{kpi.value}</h3>
+                  <div className="flex items-center gap-1">
+                    <ArrowUpRight size={16} style={{ color: SEVCO_COLORS.green }} />
+                    <span style={{ color: SEVCO_COLORS.green }} className="text-sm font-semibold">
+                      {kpi.change}
+                    </span>
+                    <span className="text-quiet text-sm ml-1">vs last month</span>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-gray-900">{kpi.value}</div>
-                <p className="text-xs text-green-600 mt-2 font-medium">{kpi.change}</p>
-              </CardContent>
-            </Card>
+                <div
+                  className="p-3 rounded-lg group-hover:scale-110 transition-transform"
+                  style={{ backgroundColor: `${SEVCO_COLORS.blue}15` }}
+                >
+                  <Icon size={24} style={{ color: SEVCO_COLORS.blue }} strokeWidth={1.5} />
+                </div>
+              </div>
+            </div>
           )
         })}
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-            <CardDescription>Monthly revenue over the last 7 months</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Revenue Trend */}
+        <div className="surface-card rounded-xl p-8">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-strong mb-1">Revenue Trend</h2>
+            <p className="text-muted text-sm">Monthly revenue over the last 7 months</p>
+          </div>
+          <div className="w-full h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={revenueData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="month" stroke="var(--text-quiet)" style={{ fontSize: 12 }} />
+                <YAxis stroke="var(--text-quiet)" style={{ fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--surface)',
+                    border: `1px solid var(--border)`,
+                    borderRadius: '8px',
+                  }}
+                  cursor={{ stroke: SEVCO_COLORS.blue, strokeWidth: 2 }}
+                />
                 <Line
                   type="monotone"
-                  dataKey="revenue"
+                  dataKey="value"
                   stroke={SEVCO_COLORS.blue}
-                  strokeWidth={2}
-                  dot={{ fill: SEVCO_COLORS.blue, r: 4 }}
+                  strokeWidth={2.5}
+                  dot={{ fill: SEVCO_COLORS.blue, r: 5 }}
+                  activeDot={{ r: 7 }}
+                  isAnimationActive={true}
                 />
               </LineChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* User Growth Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>User Growth</CardTitle>
-            <CardDescription>Active users growth trend</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={userGrowth}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="users" fill={SEVCO_COLORS.green} radius={[8, 8, 0, 0]} />
+        {/* User Growth */}
+        <div className="surface-card rounded-xl p-8">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-strong mb-1">User Growth</h2>
+            <p className="text-muted text-sm">Active users growth over time</p>
+          </div>
+          <div className="w-full h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={userGrowth} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="month" stroke="var(--text-quiet)" style={{ fontSize: 12 }} />
+                <YAxis stroke="var(--text-quiet)" style={{ fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--surface)',
+                    border: `1px solid var(--border)`,
+                    borderRadius: '8px',
+                  }}
+                />
+                <Bar dataKey="value" fill={SEVCO_COLORS.green} radius={[8, 8, 0, 0]} isAnimationActive={true} />
               </BarChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
-      {/* Project Status & Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Project Status */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Project Status</CardTitle>
-            <CardDescription>Distribution of project states</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={projectStatus}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name}: ${value}`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {projectStatus.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Recent Activity */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest actions in your workspace</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[
-                { action: 'Project created', details: 'New design system project', time: '2h ago' },
-                { action: 'User invited', details: 'Sarah invited to Admin role', time: '5h ago' },
-                { action: 'Page published', details: 'Services page went live', time: '1d ago' },
-                { action: 'Project updated', details: 'E-commerce platform v2', time: '1d ago' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-between justify-between py-2 border-b border-gray-100 last:border-0">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{item.action}</p>
-                    <p className="text-xs text-gray-500">{item.details}</p>
-                  </div>
-                  <p className="text-xs text-gray-400 whitespace-nowrap ml-4">{item.time}</p>
-                </div>
-              ))}
+      {/* Activity Feed */}
+      <div className="surface-card rounded-xl p-8">
+        <h2 className="text-xl font-semibold text-strong mb-8">Recent Activity</h2>
+        <div className="space-y-6">
+          {[
+            { action: 'Project created', details: 'New design system project', time: '2h ago', icon: '🚀' },
+            { action: 'User invited', details: 'Sarah invited to Admin role', time: '5h ago', icon: '👤' },
+            { action: 'Page published', details: 'Services page went live', time: '1d ago', icon: '📄' },
+            { action: 'Project updated', details: 'E-commerce platform v2', time: '1d ago', icon: '⚙️' },
+          ].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-4 pb-6 border-b border-[var(--border)] last:border-0">
+              <div className="text-2xl">{item.icon}</div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-strong text-sm">{item.action}</p>
+                <p className="text-muted text-sm">{item.details}</p>
+              </div>
+              <p className="text-quiet text-xs whitespace-nowrap">{item.time}</p>
             </div>
-          </CardContent>
-        </Card>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart3, Users, FileText, Package, LogOut, Menu, X } from 'lucide-react'
-import { Button } from './ui/button'
+import { BarChart3, Users, FileText, Package, Menu, X, Settings } from 'lucide-react'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { SEVCO_COLORS } from '@/lib/utils'
 
@@ -26,38 +25,42 @@ export function AdminNav() {
 
   return (
     <>
-      {/* Mobile Top Bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
-        <Link href="/" className="block">
-          <div className="text-lg font-bold" style={{ color: SEVCO_COLORS.blue }}>SEVCO</div>
-        </Link>
-        <div className="flex items-center gap-2">
-          {mounted && <ThemeSwitcher />}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-          >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+      {/* Mobile Header */}
+      <div className="fixed top-0 left-0 right-0 z-40 md:hidden bg-[var(--surface)] border-b border-[var(--border)] px-4 py-3">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="text-xl font-bold" style={{ color: SEVCO_COLORS.blue }}>
+            SEVCO
+          </Link>
+          <div className="flex items-center gap-2">
+            {mounted && <ThemeSwitcher />}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 hover:bg-[var(--surface-muted)] rounded-lg transition-colors"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-screen w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 transition-all duration-300 z-30 md:translate-x-0 ${
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        className={`fixed left-0 top-0 h-screen w-64 bg-[var(--surface)] border-r border-[var(--border)] p-6 transition-all duration-300 z-30 md:translate-x-0 flex flex-col ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* LOGO */}
-        <Link href="/" className="mb-8 block pt-12 md:pt-0">
-          <div className="text-xl font-bold" style={{ color: SEVCO_COLORS.blue }}>
-            SEVCO
+        {/* Logo */}
+        <Link href="/" className="mb-8 hidden md:block">
+          <div className="flex flex-col gap-1">
+            <div className="text-2xl font-bold" style={{ color: SEVCO_COLORS.blue }}>
+              SEVCO
+            </div>
+            <div className="text-xs text-muted">Mission Control</div>
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Mission Control</div>
         </Link>
 
-        {/* NAV ITEMS */}
-        <nav className="space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -67,41 +70,47 @@ export function AdminNav() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? 'text-white'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    ? 'text-white shadow-md'
+                    : 'text-muted hover:bg-[var(--surface-muted)]'
                 }`}
                 style={isActive ? { backgroundColor: SEVCO_COLORS.blue } : {}}
               >
-                <Icon size={18} />
-                {item.label}
+                <Icon size={18} strokeWidth={1.5} />
+                <span>{item.label}</span>
               </Link>
             )
           })}
         </nav>
 
-        {/* Theme & LOGOUT */}
-        <div className="absolute bottom-6 left-6 right-6 space-y-2">
+        {/* Footer Actions */}
+        <div className="space-y-3 pt-6 border-t border-[var(--border)]">
           {mounted && (
-            <div className="hidden md:block mb-3">
+            <div className="hidden md:block">
               <ThemeSwitcher />
             </div>
           )}
-          <Button variant="outline" className="w-full dark:bg-gray-800 dark:border-gray-700 dark:text-white" onClick={() => {}}>
-            <LogOut size={16} className="mr-2" />
-            Logout
-          </Button>
+          <Link
+            href="#"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted hover:bg-[var(--surface-muted)] transition-colors"
+          >
+            <Settings size={18} strokeWidth={1.5} />
+            <span>Settings</span>
+          </Link>
         </div>
       </div>
 
-      {/* Mobile menu backdrop */}
+      {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-20 md:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
+
+      {/* Mobile Spacer */}
+      <div className="h-16 md:hidden" />
     </>
   )
 }

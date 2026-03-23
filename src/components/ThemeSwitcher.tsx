@@ -32,8 +32,14 @@ export function ThemeSwitcher() {
     
     if (newTheme === 'light') {
       document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove('blue', 'red', 'yellow', 'green')
     } else {
       document.documentElement.classList.add('dark')
+      document.documentElement.classList.remove('light')
+      if (['blue', 'red', 'yellow', 'green'].includes(newTheme)) {
+        document.documentElement.classList.remove('blue', 'red', 'yellow', 'green')
+        document.documentElement.classList.add(newTheme)
+      }
     }
   }
 
@@ -43,9 +49,9 @@ export function ThemeSwitcher() {
 
   if (!mounted) return null
 
-  const themes: Array<{ id: Theme; label: string; color?: string }> = [
+  const themes: Array<{ id: Theme; label: string; color?: string; icon?: React.ReactNode }> = [
     { id: 'light', label: 'Light', color: '#ffffff' },
-    { id: 'dark', label: 'Dark', color: '#0a0a0a' },
+    { id: 'dark', label: 'Dark', color: '#1e293b' },
     { id: 'blue', label: 'Blue', color: SEVCO_COLORS.blue },
     { id: 'red', label: 'Red', color: SEVCO_COLORS.red },
     { id: 'yellow', label: 'Yellow', color: SEVCO_COLORS.yellow },
@@ -56,16 +62,17 @@ export function ThemeSwitcher() {
     <div className="relative">
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="p-2 rounded-lg bg-gray-900 dark:bg-gray-100 text-white dark:text-black hover:opacity-80 transition-opacity flex items-center gap-2"
+        className="w-full px-4 py-3 rounded-lg bg-[var(--surface-muted)] text-strong hover:bg-[var(--surface-strong)] transition-colors flex items-center gap-2 font-medium text-sm"
         aria-label="Theme switcher"
       >
-        <Palette size={18} />
-        <span className="hidden sm:inline text-sm font-medium capitalize">{THEME_CONFIG[theme].name}</span>
+        <Palette size={16} strokeWidth={1.5} />
+        <span className="hidden sm:inline capitalize">{THEME_CONFIG[theme].name}</span>
       </button>
 
       {showMenu && (
-        <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 z-50 min-w-48">
-          <div className="space-y-2">
+        <div className="absolute right-0 mt-2 w-56 bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-lg p-4 z-50">
+          <p className="text-xs text-muted font-semibold mb-3 uppercase tracking-wider">Theme</p>
+          <div className="space-y-2 mb-4 pb-4 border-b border-[var(--border)]">
             {themes.map((t) => (
               <button
                 key={t.id}
@@ -75,40 +82,39 @@ export function ThemeSwitcher() {
                 }}
                 className={`w-full px-3 py-2 rounded-lg text-left text-sm font-medium transition-all flex items-center gap-3 ${
                   theme === t.id
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-[var(--accent-soft)]'
+                    : 'text-muted hover:bg-[var(--surface-muted)]'
                 }`}
               >
                 <div
-                  className="w-4 h-4 rounded-full border-2 border-current"
+                  className="w-4 h-4 rounded-full border-2 border-current flex-shrink-0"
                   style={{ backgroundColor: t.color || 'transparent' }}
                 />
-                {t.label}
+                <span>{t.label}</span>
+                {theme === t.id && <span className="ml-auto text-xs">✓</span>}
               </button>
             ))}
           </div>
 
-          <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-            <button
-              onClick={() => {
-                toggleDarkMode()
-                setShowMenu(false)
-              }}
-              className="w-full px-3 py-2 rounded-lg text-left text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all flex items-center gap-2"
-            >
-              {theme === 'light' ? (
-                <>
-                  <Moon size={16} />
-                  Switch to Dark Mode
-                </>
-              ) : (
-                <>
-                  <Sun size={16} />
-                  Switch to Light Mode
-                </>
-              )}
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              toggleDarkMode()
+              setShowMenu(false)
+            }}
+            className="w-full px-3 py-2 rounded-lg text-left text-sm font-medium text-muted hover:bg-[var(--surface-muted)] transition-colors flex items-center gap-2"
+          >
+            {theme === 'light' ? (
+              <>
+                <Moon size={16} strokeWidth={1.5} />
+                <span>Dark Mode</span>
+              </>
+            ) : (
+              <>
+                <Sun size={16} strokeWidth={1.5} />
+                <span>Light Mode</span>
+              </>
+            )}
+          </button>
         </div>
       )}
     </div>
