@@ -24,10 +24,15 @@ interface ProjectDialogProps {
 }
 
 export default function ProjectDialog({ isOpen, onClose, onSave, project }: ProjectDialogProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string
+    description: string
+    status: 'active' | 'paused' | 'archived'
+    owner_id: string
+  }>({
     name: '',
     description: '',
-    status: 'active' as const,
+    status: 'active',
     owner_id: 'peter',
   })
 
@@ -36,14 +41,14 @@ export default function ProjectDialog({ isOpen, onClose, onSave, project }: Proj
       setFormData({
         name: project.name,
         description: project.description,
-        status: project.status,
+        status: project.status as 'active' | 'paused' | 'archived',
         owner_id: project.owner_id,
       })
     } else {
       setFormData({
         name: '',
         description: '',
-        status: 'active',
+        status: 'active' as const,
         owner_id: 'peter',
       })
     }

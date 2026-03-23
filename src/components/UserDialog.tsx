@@ -22,10 +22,14 @@ interface UserDialogProps {
 }
 
 export default function UserDialog({ isOpen, onClose, onSave, user }: UserDialogProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    email: string
+    name: string
+    role: 'admin' | 'manager' | 'viewer'
+  }>({
     email: '',
     name: '',
-    role: 'viewer' as const,
+    role: 'viewer',
   })
 
   useEffect(() => {
