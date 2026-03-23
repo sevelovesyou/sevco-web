@@ -93,7 +93,7 @@ export default function UsersPage() {
   const roleColors = {
     admin: 'bg-[#0037FF]/10 text-[#0037FF]',
     manager: 'bg-[#FCC318]/10 text-[#FCC318]',
-    viewer: 'bg-gray-100 text-gray-600',
+    viewer: 'bg-[var(--surface)] text-muted',
   }
 
   return (
@@ -101,8 +101,8 @@ export default function UsersPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Users</h1>
-          <p className="text-gray-500">Manage user accounts and permissions</p>
+          <h1 className="text-3xl font-bold text-strong">Users</h1>
+          <p className="text-muted">Manage user accounts and permissions</p>
         </div>
         <Button onClick={handleAddUser}>
           <Plus size={16} className="mr-2" />
@@ -126,23 +126,23 @@ export default function UsersPage() {
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-gray-200">
+              <thead className="border-b border-[var(--border)]">
                 <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Name</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Email</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Role</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Created</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-600">Actions</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Name</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Email</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Role</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Created</th>
+                  <th className="text-right py-3 px-4 font-medium text-muted">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                    className="border-b border-[var(--border)] hover:bg-[var(--surface)] transition-colors"
                   >
-                    <td className="py-4 px-4 font-medium text-gray-900">{user.name}</td>
-                    <td className="py-4 px-4 text-gray-600">{user.email}</td>
+                    <td className="py-4 px-4 font-medium text-strong">{user.name}</td>
+                    <td className="py-4 px-4 text-muted">{user.email}</td>
                     <td className="py-4 px-4">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -152,19 +152,19 @@ export default function UsersPage() {
                         {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-gray-600">
+                    <td className="py-4 px-4 text-muted">
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
                     <td className="py-4 px-4 text-right flex gap-2 justify-end">
                       <button
                         onClick={() => handleEditUser(user)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="p-2 hover:bg-[var(--surface-hover,var(--surface))] rounded-lg transition-colors"
                       >
-                        <Edit2 size={16} className="text-gray-600" />
+                        <Edit2 size={16} className="text-muted" />
                       </button>
                       <button
                         onClick={() => handleDeleteUser(user.id)}
-                        className="p-2 hover:bg-red-100 rounded-lg transition-colors"
+                        className="p-2 hover:bg-red-500/100/10 rounded-lg transition-colors"
                       >
                         <Trash2 size={16} className="text-[#BD0000]" />
                       </button>

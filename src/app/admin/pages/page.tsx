@@ -106,8 +106,8 @@ export default function PagesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Pages</h1>
-          <p className="text-gray-500">Create and manage dynamic pages</p>
+          <h1 className="text-3xl font-bold text-strong">Pages</h1>
+          <p className="text-muted">Create and manage dynamic pages</p>
         </div>
         <Button onClick={handleAddPage}>
           <Plus size={16} className="mr-2" />
@@ -136,17 +136,17 @@ export default function PagesPage() {
                   {page.published ? (
                     <Eye size={18} className="text-green-600" />
                   ) : (
-                    <EyeOff size={18} className="text-gray-400" />
+                    <EyeOff size={18} className="text-muted" />
                   )}
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-gray-600 line-clamp-3">
+              <p className="text-sm text-muted line-clamp-3">
                 {page.content}
               </p>
 
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-muted">
                 <p>Created {new Date(page.created_at).toLocaleDateString()}</p>
                 <p>By {page.created_by}</p>
               </div>
@@ -154,14 +154,14 @@ export default function PagesPage() {
               <div className="flex gap-2 pt-2">
                 <button
                   onClick={() => handleEditPage(page)}
-                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium"
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-[var(--border)] hover:bg-[var(--surface)] transition-colors text-sm font-medium"
                 >
                   <Edit2 size={16} />
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeletePage(page.id)}
-                  className="flex items-center justify-center p-2 rounded-lg hover:bg-red-50 transition-colors"
+                  className="flex items-center justify-center p-2 rounded-lg hover:bg-red-500/100/10 transition-colors"
                 >
                   <Trash2 size={16} className="text-[#BD0000]" />
                 </button>

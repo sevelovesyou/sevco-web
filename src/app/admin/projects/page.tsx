@@ -128,7 +128,7 @@ export default function ProjectsPage() {
   const statusColors = {
     active: 'bg-[#00A611]/10 text-[#00A611]',
     paused: 'bg-[#FCC318]/10 text-[#FCC318]',
-    archived: 'bg-gray-100 text-gray-600',
+    archived: 'bg-[var(--surface)] text-muted',
   }
 
   const statusIcons = {
@@ -142,8 +142,8 @@ export default function ProjectsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-          <p className="text-gray-500">Manage your projects and applications</p>
+          <h1 className="text-3xl font-bold text-strong">Projects</h1>
+          <p className="text-muted">Manage your projects and applications</p>
         </div>
         <Button onClick={handleAddProject}>
           <Plus size={16} className="mr-2" />
@@ -167,14 +167,14 @@ export default function ProjectsPage() {
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-gray-200">
+              <thead className="border-b border-[var(--border)]">
                 <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Name</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Description</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Status</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Owner</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-600">Updated</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-600">Actions</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Name</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Description</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Status</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Owner</th>
+                  <th className="text-left py-3 px-4 font-medium text-muted">Updated</th>
+                  <th className="text-right py-3 px-4 font-medium text-muted">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,12 +183,12 @@ export default function ProjectsPage() {
                   return (
                     <tr
                       key={project.id}
-                      className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                      className="border-b border-[var(--border)] hover:bg-[var(--surface)] transition-colors"
                     >
-                      <td className="py-4 px-4 font-medium text-gray-900">
+                      <td className="py-4 px-4 font-medium text-strong">
                         {project.name}
                       </td>
-                      <td className="py-4 px-4 text-gray-600 max-w-xs truncate">
+                      <td className="py-4 px-4 text-muted max-w-xs truncate">
                         {project.description}
                       </td>
                       <td className="py-4 px-4">
@@ -204,38 +204,38 @@ export default function ProjectsPage() {
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-gray-600">{project.owner_id}</td>
-                      <td className="py-4 px-4 text-gray-600">
+                      <td className="py-4 px-4 text-muted">{project.owner_id}</td>
+                      <td className="py-4 px-4 text-muted">
                         {new Date(project.updated_at).toLocaleDateString()}
                       </td>
                       <td className="py-4 px-4 text-right flex gap-2 justify-end">
                         {project.status === 'active' && (
                           <button
                             onClick={() => handleUpdateStatus(project.id, 'paused')}
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="p-2 hover:bg-[var(--surface-hover,var(--surface))] rounded-lg transition-colors"
                             title="Pause project"
                           >
-                            <Pause size={16} className="text-gray-600" />
+                            <Pause size={16} className="text-muted" />
                           </button>
                         )}
                         {project.status === 'paused' && (
                           <button
                             onClick={() => handleUpdateStatus(project.id, 'active')}
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="p-2 hover:bg-[var(--surface-hover,var(--surface))] rounded-lg transition-colors"
                             title="Resume project"
                           >
-                            <Play size={16} className="text-gray-600" />
+                            <Play size={16} className="text-muted" />
                           </button>
                         )}
                         <button
                           onClick={() => handleEditProject(project)}
-                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          className="p-2 hover:bg-[var(--surface-hover,var(--surface))] rounded-lg transition-colors"
                         >
-                          <Edit2 size={16} className="text-gray-600" />
+                          <Edit2 size={16} className="text-muted" />
                         </button>
                         <button
                           onClick={() => handleDeleteProject(project.id)}
-                          className="p-2 hover:bg-red-100 rounded-lg transition-colors"
+                          className="p-2 hover:bg-red-500/100/10 rounded-lg transition-colors"
                         >
                           <Trash2 size={16} className="text-[#BD0000]" />
                         </button>
