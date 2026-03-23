@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const socials = [
   { label: "Instagram", href: "https://instagram.com/sevelovesyou" },
@@ -50,7 +51,13 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
           {/* Brand col */}
           <div className="col-span-2 md:col-span-1">
-            <p className="text-white font-bold text-2xl tracking-widest uppercase mb-3">SEVCO</p>
+            <Image
+              src="/logo-white.svg"
+              alt="SEVCO"
+              width={140}
+              height={36}
+              className="h-9 w-auto mb-4"
+            />
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               Driving progress through great products. Digital agency & music services firm.
             </p>

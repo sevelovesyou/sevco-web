@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const links = [
   { label: "Work", href: "/work" },
@@ -28,8 +29,15 @@ export default function Nav() {
     >
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="text-white font-bold text-xl tracking-widest uppercase">
-          SEVCO
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo-white.svg"
+            alt="SEVCO"
+            width={120}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop links */}
