@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "@/lib/theme-context";
 
 const links = [
   { label: "Work", href: "/work" },
@@ -11,9 +12,20 @@ const links = [
   { label: "About", href: "/about" },
 ];
 
+const themes = [
+  { id: "light", label: "Light", color: "#ffffff" },
+  { id: "dark", label: "Dark", color: "#0a0a0a" },
+  { id: "blue", label: "Blue", color: "#0037FF" },
+  { id: "red", label: "Red", color: "#BD0000" },
+  { id: "yellow", label: "Yellow", color: "#FCC318" },
+  { id: "green", label: "Green", color: "#00A611" },
+];
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -54,8 +66,52 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* CTA */}
+        {/* Theme Toggle + CTA */}
         <div className="hidden md:flex items-center gap-4">
+          {/* Theme Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              aria-label="Toggle theme"
+            >
+              <svg
+                className="w-5 h-5 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M5 3a2 2 0 00-2 2v6h16V5a2 2 0 00-2-2H5zm16 8H3v6a2 2 0 002 2h14a2 2 0 002-2v-6z" />
+              </svg>
+            </button>
+
+            {themeOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-black/95 border border-white/10 rounded-lg shadow-lg p-3 z-40">
+                <div className="grid grid-cols-2 gap-2">
+                  {themes.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => {
+                        setTheme(t.id);
+                        setThemeOpen(false);
+                      }}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${
+                        theme === t.id
+                          ? "bg-white/20 border border-white/30"
+                          : "hover:bg-white/10"
+                      }`}
+                    >
+                      <div
+                        className="w-3 h-3 rounded-full border border-white/20"
+                        style={{ backgroundColor: t.color }}
+                      />
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <Link
             href="/contact"
             className="text-sm bg-white text-black px-5 py-2 rounded-full font-semibold hover:bg-white/90 transition-colors"
